@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>MedRef - Symptom Filter MVP</title>
+  <style>
+    body { font-family: Arial; padding: 20px; }
+    .symptom-list { margin: 10px 0; }
+    .disease-card { background: #f0f0f0; padding: 10px; margin: 5px; border-radius: 5px; }
+    input { padding: 8px; width: 200px; }
+    button { padding: 8px; background: #007bff; color: white; border: none; cursor: pointer; }
+  </style>
+</head>
+<body>
+  <h2>MedRef: Symptom-Based Disease Lookup (MVP)</h2>
+  <input type="text" id="symptomInput" placeholder="Enter symptom (e.g., headache)">
+  <button onclick="addSymptom()">Add Symptom</button>
+  <div class="symptom-list" id="selectedSymptoms"></div>
+  <hr>
+  <div id="diseaseList"></div>
+
+  <script>
+    // Sample Disease Database (ICD-11 Codes Included)
+    const diseases = {
+      migraine: { 
+        symptoms: ["headache", "nausea", "sensitivity to light"],
+        icd11: "8D20.0",
+        description: "Recurrent headache disorder with attacks lasting 4–72 hours."
+      },
+      meningitis: { 
+        symptoms: ["headache", "fever", "stiff neck"],
+        icd11: "1D01",
+        description: "Inflammation of the membranes surrounding the brain and spinal cord."
+      },
+      hypertension: { 
+        symptoms: ["headache", "dizziness", "blurred vision"],
+        icd11: "BA00",
+        description: "Persistently elevated blood pressure."
+      }
+    };
+
+    let selectedSymptoms = [];
+
+    function addSymptom() {
+      const symptom = document.getElementById('symptomInput').value.trim().toLowerCase();
+      if (symptom && !selectedSymptoms.includes(symptom)) {
+        selectedSymptoms.push(symptom);
+        document.getElementById('symptomInput').value = '';
+        updateUI();
+      }
+    }
+
+    function updateUI() {
+      // Show selected symptoms
+      document.getElementById('selectedSymptoms').innerHTML = `
+        <strong>Selected Symptoms:</strong> ${selectedSymptoms.join(', ')}
+      `;
+
+      // Filter diseases
+      const matchedDiseases = Object.entries(diseases).filter(([disease, data]) => 
+        selectedSymptoms.every(symptom => data.symptoms.includes(symptom))
+      );
+
+      // Display results
+      document.getElementById('diseaseList').innerHTML = matchedDiseases
+        .map(([disease, data]) => `
+          <div class="disease-card">
+            <strong>${disease}</strong> (ICD-11: ${data.icd11})<br>
+            ${data.description}
+          </div>
+        `).join('');
+    }
+  </script>
+</body>
+</html>
