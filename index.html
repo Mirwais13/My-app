@@ -1,74 +1,526 @@
 <!DOCTYPE html>
-<html>
+<html lang="fa" dir="rtl">
 <head>
-  <title>MedRef - Symptom Filter MVP</title>
-  <style>
-    body { font-family: Arial; padding: 20px; }
-    .symptom-list { margin: 10px 0; }
-    .disease-card { background: #f0f0f0; padding: 10px; margin: 5px; border-radius: 5px; }
-    input { padding: 8px; width: 200px; }
-    button { padding: 8px; background: #007bff; color: white; border: none; cursor: pointer; }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>معلومات</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+      * {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  direction: rtl;
+  font-family: 'Times New Roman', Times, serif;
+  background-color:#f2f4f7;
+}
+
+.header-container {
+  background:#007780;
+  /* border-bottom-left-radius: 20px;
+  border-bottom-right-radius: 20px; */
+  border: 4px rgb(113, 176, 180) solid;
+  border-radius: 10px;
+}
+
+/* Base Navigation - Keep your existing colors */
+.top-nav {
+  background: #006068;
+  padding: 10px 20px;
+}
+
+.top-nav ul {
+  display: flex;
+  list-style: none;
+  gap: 5px;
+  flex-wrap: wrap;
+  margin: 0;
+  padding: 0;
+}
+
+/* Navigation Items */
+.top-nav ul li a {
+  color: white;
+  text-decoration: none;
+  font-weight: bold;
+  font-size: 17px;
+  padding: 10px 15px;
+  border-radius: 5px;
+  transition: all 0.2s;
+  display: block;
+}
+
+.top-nav ul li a:hover,
+.active-nav-item {
+  background: #4d9aa0;
+}
+
+/* Enhanced Dropdown */
+.dropdown {
+  position: relative;
+}
+
+.city-dropdown {
+  display: none;
+  position: absolute;
+  background: #007780;
+  width: 200px;
+  max-height: 60vh;
+  overflow-y: auto;
+  border-radius: 0 0 5px 5px;
+  z-index: 100;
+  box-shadow: 0 5px 10px rgba(0,0,0,0.2);
+}
+
+.dropdown:hover .city-dropdown {
+  display: block;
+}
+
+.dropdown-header {
+  padding: 10px 15px;
+  color: #a8e6ef;
+  font-size: 14px;
+  border-bottom: 1px solid #006068;
+}
+
+.city-dropdown a {
+  padding: 10px 15px;
+  display: block;
+  color: white;
+  font-size: 15px;
+  border-bottom: 1px solid #006068;
+}
+
+.city-dropdown a:hover {
+  background: #4d9aa0;
+}
+
+/* Mobile Optimization */
+@media (max-width: 768px) {
+  .top-nav ul {
+      gap: 3px;
+  }
+  
+  .top-nav ul li a {
+      padding: 8px 10px;
+      font-size: 15px;
+  }
+  
+  .city-dropdown {
+      width: 180px;
+  }
+}
+
+
+header {
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  padding: 10px 20px;
+  flex-wrap: wrap;
+}
+
+.header-tools {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.logo {
+  max-width: 150px;
+  height: auto;
+}
+
+input {
+  height: 40px;
+  padding: 5px;
+  width: 300px;
+  border-radius: 8px;
+}
+
+button {
+  height: 40px;
+  padding: 5px;
+  width: 100px;
+  font-weight: bolder;
+  color:black;
+  background-color:#f2f4f7;
+  /* margin-right: 2px; */
+  /* margin-left: 15px; */
+  border-radius: 8px;
+
+}
+
+button:hover {
+  background-color: #ddd;
+  cursor: pointer;
+}
+
+.intro-short {
+  text-align: center;
+  padding: 20px;
+  /* background-color: #f5fefe; */
+  color: #004449;
+  /* border-bottom: 2px solid #007780; */
+  margin-bottom: 20px;
+}
+
+.intro-short h2 {
+  font-size: 24px;
+  margin-bottom: 10px;
+}
+
+.intro-short p {
+  font-size: 18px;
+  font-weight: bold;
+  line-height: 1.6;
+  max-width: 700px;
+  margin: 0 auto;
+
+}
+/* Add these styles to your existing CSS */
+.cards-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+  padding: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.card {
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 25px;
+  width: 280px;
+  text-align: center;
+  transition: transform 0.3s;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+}
+
+.card-icon {
+  font-size: 40px;
+  margin-bottom: 15px;
+}
+
+.card h3 {
+  color: #007780;
+  margin-bottom: 10px;
+  font-size: 20px;
+}
+
+.card p {
+  color: #555;
+  line-height: 1.5;
+}
+
+footer {
+  background-color: #004449;
+  color: white;
+  padding: 40px 20px;
+  margin-top: 30px;
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
+}
+
+.footer-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  max-width: 1200px;
+  margin: 0 auto;
+  gap: 30px;
+}
+
+.footer-section {
+  flex: 1;
+  min-width: 200px;
+}
+
+.footer-section h3 {
+  color: #4d9aa0;
+  margin-bottom: 20px;
+  font-size: 18px;
+  border-bottom: 2px solid #007780;
+  padding-bottom: 8px;
+}
+
+.footer-section ul {
+  list-style: none;
+}
+
+.footer-section ul li {
+  margin-bottom: 10px;
+}
+
+.footer-section ul li a {
+  color: #f2f4f7;
+  text-decoration: none;
+  transition: color 0.3s;
+}
+
+.footer-section ul li a:hover {
+  color: #4d9aa0;
+}
+
+.footer-bottom {
+  text-align: center;
+  margin-top: 30px;
+  padding-top: 20px;
+  border-top: 1px solid #007780;
+}
+
+.social-icons {
+  display: flex;
+  gap: 15px;
+  margin-top: 15px;
+}
+
+.social-icons a {
+  color: white;
+  font-size: 20px;
+  transition: color 0.3s;
+}
+
+.social-icons a:hover {
+  color: #4d9aa0;
+}
+
+/* Language Dropdown Specific Styles */
+.lang-dropdown {
+  margin-right: auto; /* Pushes language to leftmost position in RTL */
+}
+
+.lang-options {
+  display: none;
+  position: absolute;
+  background: #007780;
+  width: 150px;
+  border-radius: 0 0 5px 5px;
+  z-index: 100;
+  box-shadow: 0 5px 10px rgba(0,0,0,0.2);
+  left: 0; /* Align properly in RTL */
+}
+
+.lang-dropdown:hover .lang-options {
+  display: block;
+}
+
+.lang-option {
+  padding: 10px 15px;
+  display: flex;
+  justify-content: space-between;
+  color: white;
+  text-decoration: none;
+  border-bottom: 1px solid #006068;
+  transition: all 0.2s;
+}
+
+.lang-option:hover {
+  background: #4d9aa0;
+}
+
+.active-lang {
+  background: #004449;
+}
+
+.checkmark {
+  color: #4d9aa0;
+  font-weight: bold;
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 768px) {
+  .lang-options {
+      width: 130px;
+  }
+  
+  .lang-option {
+      padding: 8px 12px;
+      font-size: 14px;
+  }
+}
+    </style  
 </head>
 <body>
-  <h2>MedRef: Symptom-Based Disease Lookup (MVP)</h2>
-  <input type="text" id="symptomInput" placeholder="Enter symptom (e.g., headache)">
-  <button onclick="addSymptom()">Add Symptom</button>
-  <div class="symptom-list" id="selectedSymptoms"></div>
-  <hr>
-  <div id="diseaseList"></div>
-
-  <script>
-    // Sample Disease Database (ICD-11 Codes Included)
-    const diseases = {
-      migraine: { 
-        symptoms: ["headache", "nausea", "sensitivity to light"],
-        icd11: "8D20.0",
-        description: "Recurrent headache disorder with attacks lasting 4–72 hours."
-      },
-      meningitis: { 
-        symptoms: ["headache", "fever", "stiff neck"],
-        icd11: "1D01",
-        description: "Inflammation of the membranes surrounding the brain and spinal cord."
-      },
-      hypertension: { 
-        symptoms: ["headache", "dizziness", "blurred vision"],
-        icd11: "BA00",
-        description: "Persistently elevated blood pressure."
-      }
-    };
-
-    let selectedSymptoms = [];
-
-    function addSymptom() {
-      const symptom = document.getElementById('symptomInput').value.trim().toLowerCase();
-      if (symptom && !selectedSymptoms.includes(symptom)) {
-        selectedSymptoms.push(symptom);
-        document.getElementById('symptomInput').value = '';
-        updateUI();
-      }
-    }
-
-    function updateUI() {
-      // Show selected symptoms
-      document.getElementById('selectedSymptoms').innerHTML = `
-        <strong>Selected Symptoms:</strong> ${selectedSymptoms.join(', ')}
-      `;
-
-      // Filter diseases
-      const matchedDiseases = Object.entries(diseases).filter(([disease, data]) => 
-        selectedSymptoms.every(symptom => data.symptoms.includes(symptom))
-      );
-
-      // Display results
-      document.getElementById('diseaseList').innerHTML = matchedDiseases
-        .map(([disease, data]) => `
-          <div class="disease-card">
-            <strong>${disease}</strong> (ICD-11: ${data.icd11})<br>
-            ${data.description}
+    <div class="content-area">
+        <div class="header-container">
+            <nav class="top-nav">
+                <ul>
+                    <li class="dropdown">
+                        <a href="#" class="active-nav-item">کابل ▼</a>
+                        <div class="city-dropdown">
+                            <div class="dropdown-header">شهرهای اصلی</div>
+                            <a href="#">هرات</a>
+                            <a href="#">مزار شریف</a>
+                            <a href="#">کندهار</a>
+                            <div class="dropdown-header">سایر ولایات</div>
+                            <a href="#">غزنی</a>
+                            <a href="#">بامیان</a>
+                            <a href="#">پکتیا</a>
+                        </div>
+                    </li>
+                    <li><a href="#">ایمرجنسی</a></li>
+                    <li><a href="#">خدمات</a></li>
+                    <li><a href="#">درباره</a></li>
+                    <li><a href="#">تماس</a></li>
+                    <li class="dropdown lang-dropdown">
+                        <a href="#">فارسی ▼</a>
+                        <div class="lang-options">
+                            <a href="#">فارسی</a>
+                            <a href="#">پښتو</a>
+                            <a href="#">English</a>
+                            <a href="#">اردو</a>
+                        </div>
+                    </li>
+                </ul>
+            </nav>
+            <header>
+                <img class="logo" src="malomat.png" alt="Malomat logo">
+                <div class="header-tools">
+                    <input type="text" placeholder="جستجو کنید...">
+                    <button>فشار بده</button>
+                </div>
+            </header>
+        </div>
+        
+        <section class="intro-short">
+            <h2>درباره معلومات</h2>
+            <p>
+                معلومات یک برنامه ساده و رایگان برای دسترسی به خدمات عمومی،آدرس ها, شماره‌های اضطراری، مراکز صحی و معلومات مفید در سراسر افغانستان است — حتی بدون اینترنت.
+            </p>
+        </section>
+   <!-- Cards Section -->
+   <section class="cards-container">
+    <div class="card">
+        <div class="card-icon">🏥</div>
+        <h3>مراکز صحی</h3>
+        <p>پیدا کردن نزدیکترین کلینیک و شفاخانه با معلومات تماس</p>
+    </div>
+    <div class="card">
+        <div class="card-icon">🚨</div>
+        <h3>خدمات اضطراری</h3>
+        <p>شماره های تماس پولیس، اطفائیه و خدمات نجات</p>
+    </div>
+    <div class="card">
+        <div class="card-icon">🏢</div>
+        <h3>ادارات دولتی</h3>
+        <p>آدرس و معلومات ادارات دولتی در ولایات مختلف</p>
+    </div>
+    <div class="card">
+        <div class="card-icon">🚍</div>
+        <h3>حمل و نقل</h3>
+        <p>مسیرهای ترانسپورت عمومی و معلومات مفید</p>
+    </div>
+    <div class="card">
+        <div class="card-icon">🏥</div>
+        <h3>مراکز صحی</h3>
+        <p>پیدا کردن نزدیکترین کلینیک و شفاخانه با معلومات تماس</p>
+    </div>
+    <div class="card">
+        <div class="card-icon">🚨</div>
+        <h3>خدمات اضطراری</h3>
+        <p>شماره های تماس پولیس، اطفائیه و خدمات نجات</p>
+    </div>
+    <div class="card">
+        <div class="card-icon">🏢</div>
+        <h3>ادارات دولتی</h3>
+        <p>آدرس و معلومات ادارات دولتی در ولایات مختلف</p>
+    </div>
+    <div class="card">
+        <div class="card-icon">🚍</div>
+        <h3>حمل و نقل</h3>
+        <p>مسیرهای ترانسپورت عمومی و معلومات مفید</p>
+    </div>
+    <div class="card">
+        <div class="card-icon">🚍</div>
+        <h3>حمل و نقل</h3>
+        <p>مسیرهای ترانسپورت عمومی و معلومات مفید</p>
+    </div>
+    <div class="card">
+        <div class="card-icon">🏢</div>
+        <h3>ادارات دولتی</h3>
+        <p>آدرس و معلومات ادارات دولتی در ولایات مختلف</p>
+    </div>
+    <div class="card">
+        <div class="card-icon">🚍</div>
+        <h3>حمل و نقل</h3>
+        <p>مسیرهای ترانسپورت عمومی و معلومات مفید</p>
+    </div>
+    <div class="card">
+        <div class="card-icon">🚍</div>
+        <h3>حمل و نقل</h3>
+        <p>مسیرهای ترانسپورت عمومی و معلومات مفید</p>
+    </div>
+    <div class="card">
+        <div class="card-icon">🏢</div>
+        <h3>ادارات دولتی</h3>
+        <p>آدرس و معلومات ادارات دولتی در ولایات مختلف</p>
+    </div>
+    
+  </section>
+  
+  <footer>
+    <div class="footer-container">
+        <div class="footer-section">
+            <h3>لینک های سریع</h3>
+            <ul>
+                <li><a href="#">صفحه اصلی</a></li>
+                <li><a href="#">خدمات اضطراری</a></li>
+                <li><a href="#">مراکز صحی</a></li>
+                <li><a href="#">حمل و نقل</a></li>
+            </ul>
+        </div>
+        
+        <div class="footer-section">
+            <h3>تماس با ما</h3>
+            <ul>
+                <li>کابل، افغانستان</li>
+                <li>شماره تماس: ۰۷۰۱۲۳۴۵۶۷</li>
+                <li>ایمیل: info@malomat.af</li>
+            </ul>
+        </div>
+        <div class="footer-section">
+          <h3>درباره معلومات</h3>
+          <p>معلومات یک پلتفرم رایگان برای دسترسی به خدمات عمومی در سراسر افغانستان است.</p>
+          <div class="social-icons">
+              <!-- Facebook SVG -->
+              <a href="#" aria-label="فیسبوک">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="white">
+                      <path d="M22 12c0-5.52-4.48-10-10-10S2 6.48 2 12c0 4.84 3.44 8.87 8 9.8V15H8v-3h2V9.5C10 7.57 11.57 6 13.5 6H16v3h-2c-.55 0-1 .45-1 1v2h3v3h-3v6.95c5.05-.5 9-4.76 9-9.95z"/>
+                  </svg>
+              </a>
+              
+              <!-- Twitter SVG -->
+              <a href="#" aria-label="تویتر">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="white">
+                      <path d="M22.46 6c-.77.35-1.6.58-2.46.69.88-.53 1.56-1.37 1.88-2.38-.83.5-1.75.85-2.72 1.05C18.37 4.5 17.26 4 16 4c-2.35 0-4.27 1.92-4.27 4.29 0 .34.04.67.11.98C8.28 9.09 5.11 7.38 3 4.79c-.37.63-.58 1.37-.58 2.15 0 1.49.75 2.81 1.91 3.56-.71 0-1.37-.2-1.95-.5v.03c0 2.08 1.48 3.82 3.44 4.21a4.22 4.22 0 0 1-1.93.07 4.28 4.28 0 0 0 4 2.98 8.521 8.521 0 0 1-5.33 1.84c-.34 0-.68-.02-1.02-.06C3.44 20.29 5.7 21 8.12 21 16 21 20.33 14.46 20.33 8.79c0-.19 0-.37-.01-.56.84-.6 1.56-1.36 2.14-2.23z"/>
+                  </svg>
+              </a>
+              
+              <!-- Telegram SVG -->
+              <a href="#" aria-label="تلگرام">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="white">
+                      <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.57-1.38-.93-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69.03-.1.05-.2 0-.3-.06-.1-.19-.13-.36-.07-.15.05-2.6 1.72-7.34 5.05-.7.5-1.34.75-1.91.73-.6-.03-1.75-.34-2.6-.62-1.07-.36-1.92-.55-1.85-1.16.03-.3.45-.6 1.23-.86z"/>
+                  </svg>
+              </a>
           </div>
-        `).join('');
-    }
-  </script>
+      </div>
+  </div>
+  
+  <div class="footer-bottom">
+      <p>© ۲۰۲۳ معلومات - تمام حقوق محفوظ است</p>
+  </div>
+</footer>
+      
 </body>
 </html>
